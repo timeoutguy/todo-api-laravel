@@ -80,16 +80,10 @@ class TodoController extends Controller
      */
     public function update(UpdateTodoRequest $request, $id)
     {
-        $updateTodo = [
-            'title'=> $request->title,
-            'description'=> $request->description,
-            'completed'=> $request->completed,
-        ];
-
         DB::beginTransaction();
 
         try {
-            $updateTodo = $this->todoRepositoryInterface->update($updateTodo, $id);
+            $this->todoRepositoryInterface->update($request->all(), $id);
             DB::commit();
 
             $todo = $this->todoRepositoryInterface->getById($id);

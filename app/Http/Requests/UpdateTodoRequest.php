@@ -22,7 +22,9 @@ class UpdateTodoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "title" => "sometimes|string",
+            "description" => "sometimes|string",
+            "completed" => "sometimes|boolean"
         ];
     }
 }
