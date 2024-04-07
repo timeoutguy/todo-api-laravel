@@ -9,7 +9,7 @@ use App\Http\Resources\TodoResource;
 use App\Interfaces\TodoRepositoryInterface;
 use App\Models\Todo;
 use DB;
-use Log;
+use Illuminate\Http\Request;
 
 class TodoController extends Controller
 {
@@ -24,9 +24,9 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->todoRepositoryInterface->index();
+        $data = Todo::where("user_id", $request->user()->id)->get();
 
         return ApiResponseClass::sendResponses(TodoResource::collection($data), '', 200);
     }
@@ -46,6 +46,7 @@ class TodoController extends Controller
         $todo = [
             'title' => $request->title,
             'description'=> $request->description,
+            'user_id' => $request->user()->id
         ];
 
         DB::beginTransaction();
