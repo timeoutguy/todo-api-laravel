@@ -33,4 +33,14 @@ class ApiResponseClass
         return response()->json($response, $code);
     }
 
+    public static function sendError($error, $message, $code) {
+        $response = [
+            'success' => false,
+            'error' => $error,
+            'message'=> $message
+        ];
+
+        return response()->json($response, $code);
+    }
+
 }
